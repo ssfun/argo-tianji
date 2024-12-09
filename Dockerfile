@@ -4,5 +4,6 @@ COPY --from=cloudflare/cloudflared:latest /usr/local/bin/cloudflared /usr/local/
 
 EXPOSE 12345
 
-CMD cloudflared --no-autoupdate run --token $CF_TOKEN & \
-    pnpm start:docker
+ENV CF_TOKEN=""
+
+CMD ["/bin/sh", "-c", "cloudflared tunnel --no-autoupdate run --token \"$CF_TOKEN\" &  pnpm start:docker"]
